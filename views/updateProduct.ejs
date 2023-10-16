@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Product</title>
+    <link rel="stylesheet" href="/updateProduct.css" />
+</head>
+<body>
+    <%- include("component/sellerHeader") %>
+    <div class="container">
+        <form id="updateProductform">
+            <div class="formelement">
+                <label for="productName">Product Name</label>
+                <input type="text" name="productName" id="productName" value="<%= product.name %>" placeholder="Product Name">
+            </div>
+            <div class="formelement">
+                <label for="productDescription">Product Description</label>
+                <input type="text" name="productDescription" id="productDescription" value="<%= product.description %>" placeholder="Product Description">
+            </div>
+            <div class="formelement">
+                <label for="productPrice">Product Price</label>
+                <input type="number" name="productPrice" id="productPrice" value="<%= product.price %>" placeholder="Product Price">
+            </div>
+            <div class="formelement">
+                <label for="productQuantity">Product Quantity</label>
+                <input type="number" name="productQuantity" id="productQuantity" value="<%= product.stock %>" placeholder="Product Quantity">
+            </div>
+            <div class="formelement">
+                <label for="productBrand">Product Brand</label>
+                <input type="text" name="productBrand" id="productBrand" value="<%= product.brand %>" placeholder="Product Brand">
+            </div>
+            <div class="formelement">
+                <label for="productCategory">Product Category</label>
+                <input type="text" name="productCategory" id="productCategory" value="<%= product.category %>" placeholder="Product Category">
+            </div>
+            <div class="formelement">
+                <input type="submit" value="Update" id="updateProductSubmit"/>
+            </div>
+        </form>
+    </div>
+    <script>
+        let pId=JSON.parse('<%- JSON.stringify(product.pid) %>');
+        // console.log(pId);
+    </script>
+    <script src="/updateProduct.js"></script>
+</body>
+</html>

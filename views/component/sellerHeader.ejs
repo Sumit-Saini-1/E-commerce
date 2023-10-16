@@ -1,0 +1,54 @@
+<style>
+    a {
+        padding: 10px;
+        background-color: rgb(49, 47, 47);
+        text-decoration: none;
+        color: white;
+        margin: 5px 3px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    a:hover {
+        background-color: rgb(63, 60, 60);
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: #1b1a1a;
+        color: white;
+        height: 6vh;
+    }
+
+    .div {
+        height: inherit;
+        display: flex;
+        align-items: center;
+    }
+
+    #logout {
+        /* padding: 10px; */
+        background-color: steelblue;
+        color: white;
+        margin: 5px 3px;
+    }
+
+    #logout:hover {
+        background-color: skyblue;
+    }
+
+</style>
+<nav>
+    <div class="div">
+        <a href="/seller/home">Order Received </a>
+        <a href="/seller/orderOut">Order Out </a>
+        <a href="/product/addProduct">Add Product </a>
+        <a href="/seller/myProduct">My Product </a>
+    </div>
+    <div class="div">
+        <a href="/seller/logout" id="logout">Logout </a>
+    </div>
+</nav>

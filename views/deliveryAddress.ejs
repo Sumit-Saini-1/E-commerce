@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Address</title>
+    <link rel="stylesheet" href="/deliveryAddress.css" />
+</head>
+<body>
+    <%- include("component/header") %>
+    <div id="addressContainer">
+        <form>
+            <div class="formelement">
+                <label for="address">Address line 1:</label>
+                <input type="text" id="address" name="address" />
+            </div>
+            <div class="formelement">
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" />
+            </div>
+            <div class="formelement">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" />
+            </div>
+            <div class="formelement">
+                <label for="district">District:</label>
+                <input type="text" id="district" name="district" />
+            </div>
+            <div class="formelement">
+                <label for="pincode">Pincode:</label>
+                <input type="number" id="pincode" name="pincode" />
+            </div>
+            <div class="formelement">
+                <input type="submit" id="saveAdress" name="saveAdress" value="Continue to Place Order" />
+            </div>
+        </form>
+    </div>
+    <div id="billContainer"></div>
+    <script src="/deliveryAddress.js"></script>
+</body>
+</html>
