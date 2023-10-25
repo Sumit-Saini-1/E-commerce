@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="/sellersignup.css" />
+</head>
+<body id="body">
+    <!-- <%- include("component/sellerHeader") %> -->
+    <div class="container">
+        <form id="signupForm" method="post" class="container-form">
+            <h2>Sign up</h2>
+            <div class="formelement">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" />
+            </div>
+            <div class="formelement">
+                <label for="mobile">Mobile:</label>
+                <input type="tel" id="mobile" name="mobile" />
+            </div>
+            <div class="formelement">
+                <label for="username">E-mail:</label>
+                <input type="text" id="username" name="username" />
+            </div>
+            <div class="formelement">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" />
+            </div>
+            <div class="formelement">
+                <label for="businessname">Business Name:</label>
+                <input type="text" id="businessname" name="businessname" />
+            </div>
+            <div class="formelement">
+                <label for="businesstype">Business Type:</label>
+                <input type="text" id="businesstype" name="businesstype" />
+            </div>
+            <!-- <div class="formelement">
+                <label for="addressline1">Address Line1:</label>
+                <input type="text" id="addressline1" name="addressline1" />
+            </div>
+            <div class="formelement">
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" />
+            </div>
+            <div class="formelement">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" />
+            </div>
+            <div class="formelement">
+                <label for="district">District:</label>
+                <input type="text" id="district" name="district" />
+            </div>
+            <div class="formelement">
+                <label for="pincode">Pincode:</label>
+                <input type="Number" id="pincode" name="pincode" />
+            </div> -->
+            <div class="formelement">
+                <label for="aadharno">Aadhar No:</label>
+                <input type="number" id="aadharno" name="aadharno" />
+            </div>
+            <div class="formelement">
+                <label for="aadhar">Aadhar image:</label>
+                <input type="file" id="aadhar" name="aadhar" />
+            </div>
+            <div class="formelement">
+                <input type="submit" id="submit" value="Submit" />
+            </div>
+            <div class="formelement">
+                <p>if already registered login <a href="/seller/login">here</a></p>
+            </div>
+        </form>
+    </div>
+    <script src="/sellersignup.js"></script>
+</body>
+</html>
