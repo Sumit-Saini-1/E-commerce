@@ -2,21 +2,6 @@ const { findDistributorByUsernameDb } = require("../databaseFuntion/distributorQ
 const {createNewDeliveryPerson,findDeliveryPersonBYusername}=require("../databaseFuntion/deliverPersonQuery")
 const {findToReceiveOrderDb,findToShipOrderDb,receivedDB,shipToDb,deliveredDb}=require("../databaseFuntion/orderQuery");
 
-function loadToShipPage(req, res) {
-    res.render("toShip");
-}
-function loadToReceivePage(req, res) {
-    res.render("toRecieve");
-}
-
-function loadLogInPage(req, res) {
-    res.render("distributorLogin");
-}
-
-function loadcreateDeliveryPersonPage(req, res) {
-    res.render("createDeliveryPerson");
-}
-
 function logIn(req, res) {
     const username = req.body.username;
     const password = req.body.password;
@@ -33,7 +18,7 @@ function logIn(req, res) {
                 }
                 req.session.sid = distributor.did;
                 req.session.role = distributor.role;
-                res.redirect("/distributor/readyForShipping");
+                res.status(200).json({ did: distributor.did, role: distributor.role });
                 return;
             }
             else {
@@ -87,8 +72,6 @@ function shipped(req,res){
     })
 }
 
-
-
 function createDeliveryPerson(req,res){
     const body=req.body;
     findDeliveryPersonBYusername(body.username).then(function(deliveryPerson){
@@ -107,14 +90,10 @@ function createDeliveryPerson(req,res){
 }
 
 module.exports = {
-    loadToShipPage,
-    loadLogInPage,
     logIn,
     toRecieve,
-    loadToReceivePage,
     received,
     toShip,
     shipped,
     createDeliveryPerson,
-    loadcreateDeliveryPersonPage
 }

@@ -1,4 +1,4 @@
-const {addNewProduct,findProductById,findProductsForPage,updateProductDB,deleteProductDB,isThisLastPage, findProductsNotAproved,addProductToApproved,addProductToRejected,findMyProductsDb,totalProductDB}=require("../databaseFuntion/productQuery");
+const {addNewProduct,findProductById,findProductsForPage,updateProductDB,deleteProductDB,isThisLastPage, findProductsNotAproved,addProductToApproved,addProductToRejected,findMyProductsDb,totalProductDB,searchProductDb}=require("../databaseFuntion/productQuery");
 
 function totalProduct(req,res){
     totalProductDB().then(function(totalProduct){
@@ -8,18 +8,6 @@ function totalProduct(req,res){
     });
 }
 
-function loadAddProductPage(req,res){
-    res.render("addProduct");
-}
-
-function showUpdateProductPage(req, res) {
-    const pid = req.params.pid;
-    findProductById(pid).then(function (product) {
-        res.render("updateProduct", { product: product });
-    }).catch(function (err) {
-        res.status(500).send("error");
-    });
-}
 
 function addProduct(req, res) {
     const body = req.body;
@@ -53,11 +41,11 @@ function addProduct(req, res) {
 function toAproveProducts(req,res){
     const page=req.params.page;
     findProductsNotAproved(page).then(async function (products) {
-        const isLast=await isThisLastPage(parseInt(page)+1,'N');
+        const isLast=await isThisLastPage(parseInt(page)+1,8,'N');
         if(products==false){
             products=[];
         }
-        res.json({products,isLast});
+        res.status(200).json({products,isLast});
         return;
     }).catch(function (err) {
         res.status(500).send("Error");
@@ -119,11 +107,11 @@ function getProducts(req, res) {
     const page = req.body.page;
     const perpage=req.body.perpage;
     findProductsForPage(page,perpage).then(async function (products) {
-        const isLast=await isThisLastPage(page+1,perpage,'Y');
+        const isLast=await isThisLastPage(parseInt(page)+1,perpage,'Y');
         if(products==false){
             products=[];
         }
-        res.json({products,isLast});
+        res.status(200).json({products,isLast});
         return;
     }).catch(function (err) {
         res.status(500).send("Error");
@@ -131,6 +119,10 @@ function getProducts(req, res) {
 }
 
 function deleteProduct(req, res) {
+    if(req.session.role!="admin"&&req.session.role!="seller"){
+        res.status(401).send("not authorized to use this page");
+        return;
+    }
     const product = req.body.product;
     deleteProductDB(product).then(function (deleted) {
         if (deleted){
@@ -148,6 +140,7 @@ function deleteProduct(req, res) {
 function myProducts(req, res) {
     const page = req.params.page;
     const perpage = parseInt(req.params.perpage);
+    
     findMyProductsDb(page,req.session.sid,perpage).then(async function (products) {
         
         // const isLast=await isThisLastPage(page+1);
@@ -155,23 +148,35 @@ function myProducts(req, res) {
         if(products==false){
             products=[];
         }
-        res.json({products,isLast});
+        res.status(200).json({products,isLast});
         return;
     }).catch(function (err) {
         res.status(500).send("Error");
     });
 }
 
+function searchProduct(req,res){
+    const searchText=req.body.searchText;
+    searchProductDb(searchText).then(products=>{
+        if(products){
+            res.status(200).json(products);
+        }
+        else{
+            res.status(200).json([]);
+        }
+    }).catch(err=>{
+        res.status(500).json(err);
+    })
+}
 module.exports = {
     addProduct,
     getProducts,
     deleteProduct,
     updateProduct,
-    showUpdateProductPage,
-    loadAddProductPage,
     toAproveProducts,
     approveProduct,
     rejectProduct,
     myProducts,
-    totalProduct
+    totalProduct,
+    searchProduct
 }

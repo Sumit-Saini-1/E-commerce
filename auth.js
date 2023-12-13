@@ -1,6 +1,6 @@
 const isLogin = function (req, res, next) {
     if (!req.session.isLoggedIn) {
-        res.redirect("/login");
+        res.status(401).send("not loggedin");
         return;
     }
     next();
@@ -8,7 +8,7 @@ const isLogin = function (req, res, next) {
 
 const isAdmin=function(req,res,next){
     if (!req.session.isLoggedIn) {
-        res.redirect("/login");
+        res.status(401).send("not loggedin");
         return;
     }
     if(req.session.role!="admin"){
@@ -20,7 +20,7 @@ const isAdmin=function(req,res,next){
 
 const isSeller=function(req,res,next){
     if (!req.session.isLoggedIn) {
-        res.redirect("/seller/login");
+        res.status(401).send("not loggedin");
         return;
     }
     if(req.session.role!="seller"){
@@ -32,7 +32,7 @@ const isSeller=function(req,res,next){
 
 const isDistributor=function(req,res,next){
     if (!req.session.isLoggedIn) {
-        res.redirect("/distributor/login");
+        res.status(401).send("not loggedin");
         return;
     }
     if(req.session.role!="distributor"){
@@ -43,7 +43,7 @@ const isDistributor=function(req,res,next){
 }
 const isDeliveryPerson=function(req,res,next){
     if (!req.session.isLoggedIn) {
-        res.redirect("/delivery/login");
+        res.status(401).send("not loggedin");
         return;
     }
     if(req.session.role!="delivery"){

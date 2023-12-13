@@ -71,7 +71,7 @@ function findProductsForPage(page,perpage) {
 }
 
 function findProductsNotAproved(page) {
-    const contentOnOne = 5;
+    const contentOnOne = 8;
     return new Promise((resolve, reject) => {
         let query = "SELECT * FROM products WHERE approved='N' ORDER BY timeofadd DESC LIMIT ?,? ";
         let data = [page * contentOnOne, contentOnOne];
@@ -205,7 +205,26 @@ function findMyProductsDb(page,sid,perpage) {
         let data = [sid,page * contentOnOne, contentOnOne];
         connection.query(query, data, function (err, results, fields) {
             if (err) {
-                console.log("47............\n", err);
+                console.log("208............\n", err);
+                reject(err);
+                return;
+            }
+            if (results[0]) {
+                resolve(results);
+                return;
+            }
+            resolve(false);
+        });
+    });
+}
+
+function searchProductDb(text){
+    return new Promise((resolve, reject) => {
+        let query = "SELECT * FROM products WHERE approved='Y' and name LIKE ? ORDER BY timeofadd DESC ";
+        let data = ["%"+text+"%"];
+        connection.query(query, data, function (err, results, fields) {
+            if (err) {
+                console.log("208............\n", err);
                 reject(err);
                 return;
             }
@@ -230,5 +249,6 @@ module.exports = {
     addProductToRejected,
     updateStock,
     findMyProductsDb,
-    totalProductDB
+    totalProductDB,
+    searchProductDb
 }

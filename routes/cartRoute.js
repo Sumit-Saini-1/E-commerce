@@ -9,15 +9,12 @@ const { getAllCartItems, addToCart,deleteFromCart,updateCartQuantity } = require
 
 cartRoute.get("/getAllCartItems", isLogin, getAllCartItems);
 
-cartRoute.post("/addToCart", addToCart);
+cartRoute.post("/addToCart",isLogin, addToCart);
 
 cartRoute.post("/deleteFromCart", deleteFromCart);
 
 cartRoute.post("/updateCart", updateCartQuantity);
 
-cartRoute.get("/gotoCart", isLogin, function (req, res) {
-    res.render("cart", { name: req.session.name });
-});
 
 module.exports = {
     cartRoute

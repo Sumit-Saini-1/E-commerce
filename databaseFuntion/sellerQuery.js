@@ -74,7 +74,7 @@ function updateIsEmailVerified(id){
 }
 
 function findSellersNotAproved(page){
-    const contentOnOne = 6;
+    const contentOnOne = 3;
     return new Promise((resolve, reject) => {
         let query = "SELECT * FROM sellers WHERE allowed='N' LIMIT ?,? ";
         let data = [page * contentOnOne, contentOnOne];

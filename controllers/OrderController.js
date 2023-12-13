@@ -44,10 +44,6 @@ function createOrder(req,res){
     });
 }
 
-function myOrderPage(req,res){
-    res.render("myOrder",{ name: req.session.name })
-}
-
 function getMyOrders(req,res){
     const uid=req.session._id;
     myOrdersDb(uid).then(function(orders){
@@ -99,7 +95,6 @@ function ordersOut(req,res){
 
 module.exports={
     createOrder,
-    myOrderPage,
     getMyOrders,
     cancelOrder,
     getReceivedOrders,

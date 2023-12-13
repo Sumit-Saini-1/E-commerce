@@ -1,24 +1,20 @@
 const express= require("express");
 const deliveryRoute=express();
-const {loadLogInPage,logIn,loadDeliveryPage,delivered}=require("../controllers/deliveryPersonController");
+const {logIn,delivered,ordersToDeliver}=require("../controllers/deliveryPersonController");
 const {isDeliveryPerson}=require("../auth");
 
 
-
-deliveryRoute.get("/login",loadLogInPage);
 deliveryRoute.post("/login",logIn);
-deliveryRoute.get("/home",isDeliveryPerson,loadDeliveryPage);
+
 deliveryRoute.post("/delivered",isDeliveryPerson,delivered);
+deliveryRoute.get("/ordersToDeliver",isDeliveryPerson,ordersToDeliver);
 
 deliveryRoute.get("/logout", function (req, res) {
     req.session.isLoggedIn = false;
-    res.redirect("/delivery/login");
+    req.session.destroy();
+    res.status(200).send("logout");
 });
 
-
-deliveryRoute.get("*", function (req, res) {
-    res.redirect("/delivery/home");
-});
 module.exports={
     deliveryRoute
 }

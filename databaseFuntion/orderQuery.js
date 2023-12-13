@@ -61,7 +61,7 @@ function receivedOrderDb(sid) {
 function dispachedToDb(oid, dispachedto) {
     return new Promise((resolve, reject) => {
         let query = "UPDATE orders SET orderstatus=?,dispachtime=now(),nextdest=?,curloc=? WHERE oid=?";
-        let data = ["dispatched", dispachedto,"dispatched to "+dispachedto, oid];
+        let data = ["dispatched", dispachedto, "dispatched to " + dispachedto, oid];
         connection.query(query, data, function (err, results, fields) {
             if (err) {
                 reject(err);
@@ -132,7 +132,7 @@ function receivedDB(oid, loc) {
 function shipToDb(oid, shipto) {
     return new Promise((resolve, reject) => {
         let query = "UPDATE orders SET orderstatus=?,nextdest=?,curloc=? WHERE oid=?";
-        let data = ["shipped", shipto, "shipped to "+shipto, oid];
+        let data = ["shipped", shipto, "shipped to " + shipto, oid];
         connection.query(query, data, function (err, results, fields) {
             if (err) {
                 reject(err);
@@ -143,10 +143,10 @@ function shipToDb(oid, shipto) {
     });
 }
 
-function ordersTodeliverDb(pincode){
+function ordersTodeliverDb(pincode) {
     return new Promise((resolve, reject) => {
         let query = "SELECT * FROM orders WHERE pincode=? and curloc=? and orderstatus!=?";
-        let data = [pincode,"shipped to Out for Delivery","cancelled"];
+        let data = [pincode, "shipped to Out for Delivery", "cancelled"];
         connection.query(query, data, function (err, results, fields) {
             if (err) {
                 reject(err);
@@ -157,10 +157,10 @@ function ordersTodeliverDb(pincode){
     });
 }
 
-function deliveredDb(oid){
+function deliveredDb(oid) {
     return new Promise((resolve, reject) => {
         let query = "UPDATE orders SET orderstatus=?,nextdest=?,curloc=?,deliverydate=now() WHERE oid=?";
-        let data = ["delivered", "delivered", "delivered",oid];
+        let data = ["delivered", "delivered", "delivered", oid];
         connection.query(query, data, function (err, results, fields) {
             if (err) {
                 reject(err);
@@ -171,12 +171,13 @@ function deliveredDb(oid){
     });
 }
 
-function monthlyReportDb(seller,month,year){
+function monthlyReportDb(seller, month, year) {
     return new Promise((resolve, reject) => {
-        let query="SELECT * FROM orders INNER JOIN products ON orders.pid=products.pid WHERE seller=? and MONTH(orderdate)=? and YEAR(orderdate)=?";
-        let data=[seller,month,year];
-        connection.query(query,data,function(err,results,fields){
-            if(err){
+        let query = "SELECT orders.pid,orderstatus,name,COUNT(oid) as count FROM orders INNER JOIN products ON orders.pid=products.pid  WHERE seller=? and MONTH(orderdate)=? and YEAR(orderdate)=? GROUP BY orderstatus,pid";
+        // let query="SELECT * FROM orders INNER JOIN products ON orders.pid=products.pid WHERE seller=? and MONTH(orderdate)=? and YEAR(orderdate)=?";
+        let data = [seller, month, year];
+        connection.query(query, data, function (err, results, fields) {
+            if (err) {
                 reject(err);
             }
             resolve(results);
@@ -184,12 +185,13 @@ function monthlyReportDb(seller,month,year){
     });
 }
 
-function yearlyReportDb(seller,year){
+function yearlyReportDb(seller, year) {
     return new Promise((resolve, reject) => {
-        let query="SELECT * FROM orders INNER JOIN products ON orders.pid=products.pid WHERE seller=? and YEAR(orderdate)=?";
-        let data=[seller,year];
-        connection.query(query,data,function(err,results,fields){
-            if(err){
+        let query = "SELECT orders.pid,orderstatus,name,COUNT(oid) as count FROM orders INNER JOIN products ON orders.pid=products.pid  WHERE seller=? and YEAR(orderdate)=? GROUP BY orderstatus,pid";
+        // let query = "SELECT * FROM orders INNER JOIN products ON orders.pid=products.pid WHERE seller=? and YEAR(orderdate)=?";
+        let data = [seller, year];
+        connection.query(query, data, function (err, results, fields) {
+            if (err) {
                 reject(err);
             }
             resolve(results);
